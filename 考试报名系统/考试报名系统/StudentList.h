@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Student.h"
+#include <vector>
 
 class StudentList
 {
@@ -8,11 +9,15 @@ public:
 	StudentList();
 	~StudentList();
 
-	Student* searchStudentById(int input_id);
+	void searchAllStudent(string index, string content);
 
 	void addStudent(Student& obj);
 
-	void deleteStudentById(int id);
+	void deleteStudent(string index, string content);
+
+	void searchStudent(string index, string content);
+
+	void editStudent(string id);
 
 	void removeAllStudent(const Student& obj);
 
@@ -21,8 +26,12 @@ public:
 
 
 	const Student* getListFirst()const;
+	
+	vector<Student*>& getResult();
 
 private:
+	
+	vector<Student*>result;
 	Student* first;
 	int number;
 };
@@ -35,28 +44,30 @@ StudentList::~StudentList()
 {
 }
 
-inline Student* StudentList::searchStudentById(int input_id)
+inline void StudentList::searchAllStudent(string index, string content)
 {
-	Student*search = first;
+	Student* search = first;
 	for (int i = 0; i < number; ++i)
 	{
-		if (search->id == input_id)
-			return search;
+		if (search->information.at(index) == content)
+			result.push_back(search);
+		if (search->next == nullptr)
+			break;
 		search = search->next;
 	}
-	return nullptr;
 }
 
 inline void StudentList::addStudent(Student & obj)
 {
-	Student* newStudent = new Student(obj);
+	Student* newStudent = new Student;
+	*newStudent = obj;
 	if (!newStudent)
 	{
 		cout << "内存申请失败，插入失败";
 		return;
 	}
 
-	if (!first || obj.id < first->id)
+	if (!first || obj.information.at("id") < first->information.at("id"))
 		//在表头插入
 	{
 		newStudent->next = first;
@@ -70,7 +81,7 @@ inline void StudentList::addStudent(Student & obj)
 	Student* insert = first;
 	for (int i = 1; i < number; ++i)
 	{
-		if (insert->id < obj.id || obj.id < insert->next->id)
+		if (insert->information.at("id") < obj.information.at("id") || obj.information.at("id") < insert->next->information.at("id"))
 			break;
 		if (i == number - 1)
 			break;
@@ -95,48 +106,100 @@ inline void StudentList::addStudent(Student & obj)
 	}
 }
 
-inline void StudentList::deleteStudentById(int id)
+inline void StudentList::deleteStudent(string index, string content)
 {
-	if (first->id == id)
-		//删除头部
+	searchAllStudent(index, content);
+	if (result.empty())
 	{
-		Student* temp = first;
-		first = first->next;
-		delete temp;
-		number--;
+		cout << "未找到相关考生";
 		return;
 	}
-	Student* deleteStudent = first;
-	for (int i = 0; i < number; ++i)
-		//寻找被删除节点的前一个节点指针
+
+	cout << "以下考生将被删除\n";
+
+	for (auto del_stu : result)
 	{
-		if (deleteStudent->next->id == id)
-			break;
+		cout << *del_stu;
+	}
+	cout << "是否确定？ Y or N  ";
+	string input;
+	cin >> input;
+	if (input == "N")
+	{ 
+		cout << "撤销操作\n";
+		return;
+	}
 		
-		if (!deleteStudent->next)
+	for (auto del_stu : result)
+	{
+		if (first->information.at("id") == del_stu->information.at("id"))
+			//删除头部
 		{
-			cout << "未找到该考号的考生\n";
+			Student* temp = first;
+			first = first->next;
+			delete temp;
+			number--;
 			return;
 		}
-		deleteStudent = deleteStudent->next;
+		Student* past_stu = first;
+		for (int i = 0; i < number; ++i)
+			//寻找被删除节点的前一个节点指针
+		{
+			if (past_stu->next->information.at("id") == del_stu->information.at("id"))
+				break;
+
+			if (!past_stu->next)
+			{
+				cout << "未找到该考生\n";
+				return;
+			}
+			past_stu = past_stu->next;
+		}
+		if (past_stu->next->next == nullptr)
+			//删除尾部节点
+		{
+			delete past_stu->next;
+			past_stu->next = nullptr;
+			number--;
+			return;
+		}
+		else
+			//删除中间节点
+		{
+			Student* temp = past_stu->next;
+			past_stu->next = past_stu->next->next;
+			delete temp;
+			number--;
+			return;
+		}
 	}
-	if (deleteStudent->next->next == nullptr)
-		//删除尾部节点
+}
+
+inline void StudentList::searchStudent(string index, string content)
+{
+	searchAllStudent(index, content);
+	if (result.empty())
 	{
-		delete deleteStudent->next;
-		deleteStudent->next = nullptr;
-		number--;
+		cout << "未找到相关考生\n";
 		return;
 	}
-	else
-		//删除中间节点
+	cout << "共找到" << result.size() << "名相关考生\n";
+	for (auto stu : result)
 	{
-		Student* temp = deleteStudent->next;
-		deleteStudent->next = deleteStudent->next->next;
-		delete temp;
-		number--;
-		return;
+		cout << *stu;
 	}
+}
+
+inline void StudentList::editStudent(string id)
+{
+	searchAllStudent("id", id);
+	cout << *result[0];
+	string index, content;
+	cout << "请输入修改的项目（考号不可被修改）\n";
+	cin >> index;
+	cout << "修改内容为\n";
+	cin >> content;
+	result[0]->editStudentInformation(index, content);
 }
 
 inline void StudentList::removeAllStudent(const Student & obj)
@@ -160,5 +223,10 @@ inline void StudentList::printAllStudent(const Student& printStudent)
 inline const Student * StudentList::getListFirst() const
 {
 	return first;
+}
+
+inline vector<Student*>& StudentList::getResult()
+{
+	return result;// TODO: 在此处插入 return 语句
 }
 

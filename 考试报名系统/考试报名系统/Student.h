@@ -2,103 +2,95 @@
 
 #include <iostream>
 #include <string>
+#include <map>
 
 using namespace std;
 
 class Student
 {
 public:
-	Student() = default;
+	Student();
 	~Student();
-	friend class StudentList;
-
-	Student(Student* p, int num, string na, string se, int ag, string ki, Student* n)
-		:id(num),name(na),sex(se),age(ag),kind(ki),next(n) {}
 
 	Student(const Student& obj)
 	{
-		id = obj.id;
-		name = obj.name;
-		sex = obj.sex;
-		age = obj.age;
-		kind = obj.kind;
+		information.at("id") = obj.information.at("id");
+		information.at("name") = obj.information.at("name");
+		information.at("sex") = obj.information.at("sex");
+		information.at("age") = obj.information.at("age");
+		information.at("kind") = obj.information.at("kind");
 	}
+
+	friend class StudentList;
 
 	bool operator==(const Student& obj)
 	{
-		if (id == obj.id&&name == obj.name&&sex == obj.sex&&age == obj.age&&kind == obj.kind)
+		if (information.at("id")==obj.information.at("id")&& information.at("name") == obj.information.at("name")
+			&& information.at("sex") == obj.information.at("sex")&& information.at("age") == obj.information.at("age")
+			&& information.at("kind") == obj.information.at("kind"))
+
 			return true;
 		return false;
 	}
 
 	friend istream& operator>>(istream& input, Student& obj)
 	{
-		input >> obj.id >> obj.name >> obj.sex >> obj.age >> obj.kind;
+		input >> obj.information.at("id") >> obj.information.at("name") >> obj.information.at("sex") 
+			>> obj.information.at("age") >> obj.information.at("kind");
 		return input;
 	}
 
 	friend ostream& operator<<(ostream& output, const Student& obj)
 	{
-		output << obj.id << " " << obj.name << " " << obj.sex << " " << obj.age << " " << obj.kind << endl;
+		output << obj.information.at("id") << " " << obj.information.at("name") << " " << obj.information.at("sex") << " "
+			<< obj.information.at("age") << " " << obj.information.at("kind") << endl;
 		return output;
 	}
 
 	bool checkStudent()
 	{
+		if (information.at("sex") != "男"&&information.at("sex") != "女")
+		{
+			cout << "性别输入有误\n";
+			return false;
+		}
+		for (auto c : information.at("age"))
+		{
+			if (c<'0' || c>'9')
+			{
+				cout << "年龄输入有误\n";
+				return false;
+			}
+		}
 		return true;
 	}
 
-	const int getStudentId()const
+	void editStudentInformation(const string& index, const string& content)
 	{
-		return id;
-	}
-	const string getStudentName()const
-	{
-		return name;
-	}
-	const string getStudentSex()const
-	{
-		return sex;
-	}
-	const int getStudentAge()const
-	{
-		return age;
-	}
-	const string getStudentKind()const
-	{
-		return kind;
+		if (index != "name"&&index != "sex"&&index != "age"&&index != "kind")
+		{
+			cout << "请输入合法的属性";
+			return;
+		}
+		information.at(index) = content;
 	}
 
-	void setStudentId(const int input_id)
-	{
-		id = input_id;
-	}
-	void setStudentName(const string input_name)
-	{
-		name = input_name;
-	}
-	void setStudentSex(const string input_sex)
-	{
-		sex = input_sex;
-	}
-	void setStudentAge(const int input_age)
-	{
-		age = input_age;
-	}
-	void setStudentKind(const string input_kind)
-	{
-		kind = input_kind;
-	}
 
 private:
-	int id;
-	string name;
-	string sex;
-	int age;
-	string kind;
+	map<string, string>information;
+	
 	Student* next;
 };
 
+
+Student::Student()
+{
+	information.insert(make_pair("id",""));
+	information.insert(make_pair("name", ""));
+	information.insert(make_pair("sex", ""));
+	information.insert(make_pair("age", "")); 
+	information.insert(make_pair("kind", ""));
+}
 
 Student::~Student()
 {
