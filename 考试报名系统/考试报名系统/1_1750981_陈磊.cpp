@@ -12,6 +12,7 @@ int main()
 	Student input_student;
 	for (int i = 0; i < firstNum; ++i)
 	{
+		cout << "请按照 学号 姓名 性别 年龄 报考种类 为格式输入考生信息" << endl;
 		cin >> input_student;
 		if (input_student.checkStudent())
 		{
@@ -28,6 +29,7 @@ int main()
 	{
 		if (order == "insert")
 		{
+			cout << "请按照 学号 姓名 性别 年龄 报考种类 为格式输入考生信息" << endl;
 			cin >> input_student;
 			if (input_student.checkStudent())
 			{
@@ -59,7 +61,7 @@ int main()
 			cin >> id;
 			studentList.editStudent(id);
 		}
-		else if(order=="overview")
+		else if(order=="count")
 		{
 			cout << "所有考生如下\n";
 		}
@@ -71,7 +73,7 @@ int main()
 
 		studentList.printAllStudent(*studentList.getListFirst());
 		studentList.getResult().clear();
-		cout << "请输入指令接下来要完成的操作：\ninsert:插入数据   delete:删除数据 edit:修改数据 overview:查看所有考生 exit:退出程序\n";
+		cout << "请输入指令接下来要完成的操作：\ninsert:插入数据   delete:删除数据 edit:修改数据 count:统计 exit:退出程序\n";
 		cin >> order;
 	}
 

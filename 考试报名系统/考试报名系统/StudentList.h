@@ -9,14 +9,19 @@ public:
 	StudentList();
 	~StudentList();
 
+	//查询所有学生中符合index属性为content的学生，并将符合条件的学生全部储存在result里
 	void searchAllStudent(string index, string content);
 
+	//添加一个学生
 	void addStudent(Student& obj);
 
+	//按条件删除学生
 	void deleteStudent(string index, string content);
 
 	void searchStudent(string index, string content);
 
+
+	//根据学生的考号来寻找学生并进行相关的修改
 	void editStudent(string id);
 
 	void removeAllStudent(const Student& obj);
@@ -42,6 +47,7 @@ StudentList::StudentList()
 
 StudentList::~StudentList()
 {
+	removeAllStudent(*first);
 }
 
 inline void StudentList::searchAllStudent(string index, string content)

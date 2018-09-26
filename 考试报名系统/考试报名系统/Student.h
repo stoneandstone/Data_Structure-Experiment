@@ -7,6 +7,7 @@
 using namespace std;
 
 class Student
+	//节点类的定义和实现
 {
 public:
 	Student();
@@ -84,6 +85,7 @@ private:
 
 
 Student::Student()
+//分别代表了学生的五个属性 学号 姓名 性别 年龄 报考种类
 {
 	information.insert(make_pair("id",""));
 	information.insert(make_pair("name", ""));
