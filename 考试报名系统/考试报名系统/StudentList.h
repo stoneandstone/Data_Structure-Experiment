@@ -18,6 +18,7 @@ public:
 	//按条件删除学生
 	void deleteStudent(string index, string content);
 
+	//按条件查找学生
 	void searchStudent(string index, string content);
 
 
@@ -30,7 +31,7 @@ public:
 
 
 
-	const Student* getListFirst()const;
+	const Student* getListHead()const;
 	
 	vector<Student*>& getResult();
 
@@ -38,11 +39,17 @@ private:
 	
 	vector<Student*>result;
 	Student* first;
+	Student* headNode, *endNode;
 	int number;
 };
 
 StudentList::StudentList()
 {
+	headNode = new Student;
+	endNode = new Student;
+	first = headNode;
+	headNode->next = endNode;
+	endNode->next = nullptr;
 }
 
 StudentList::~StudentList()
@@ -52,13 +59,11 @@ StudentList::~StudentList()
 
 inline void StudentList::searchAllStudent(string index, string content)
 {
-	Student* search = first;
-	for (int i = 0; i < number; ++i)
+	Student* search = headNode;
+	while (search != endNode)
 	{
 		if (search->information.at(index) == content)
 			result.push_back(search);
-		if (search->next == nullptr)
-			break;
 		search = search->next;
 	}
 }
@@ -73,43 +78,21 @@ inline void StudentList::addStudent(Student & obj)
 		return;
 	}
 
-	if (!first || obj.information.at("id") < first->information.at("id"))
-		//在表头插入
+	Student* insert = headNode;
+	while (insert != endNode)
 	{
-		newStudent->next = first;
-		first = newStudent;
-		number++;
-		cout << "录入成功\n";
-		return;
-	}
-
-
-	Student* insert = first;
-	for (int i = 1; i < number; ++i)
-	{
-		if (insert->information.at("id") < obj.information.at("id") || obj.information.at("id") < insert->next->information.at("id"))
+		if (insert->information.at("id") == obj.information.at("id"))
+		{
+			cout << "不能有相同的考号，插入失败" << endl;
+			return;
+		}
+		if (insert->information.at("id") < obj.information.at("id") && obj.information.at("id") < insert->next->information.at("id"))
 			break;
-		if (i == number - 1)
-			break;
+		insert = insert->next;
 	}
-
-	if (insert->next == nullptr)
-		//在表尾插入
-	{
-		insert->next = newStudent;
-		number++;
-		cout << "录入成功\n";
-		return;
-	}
-	else
-		//表中央插入
-	{
-		newStudent->next = insert->next;
-		insert->next = newStudent;
-		number++;
-		cout << "录入成功\n";
-		return;
-	}
+	newStudent->next = insert->next;
+	insert->next = newStudent;
+	cout << "插入成功" << endl;
 }
 
 inline void StudentList::deleteStudent(string index, string content)
@@ -117,7 +100,7 @@ inline void StudentList::deleteStudent(string index, string content)
 	searchAllStudent(index, content);
 	if (result.empty())
 	{
-		cout << "未找到相关考生";
+		cout << "未找到相关考生" << endl;
 		return;
 	}
 
@@ -127,10 +110,10 @@ inline void StudentList::deleteStudent(string index, string content)
 	{
 		cout << *del_stu;
 	}
-	cout << "是否确定？ Y or N  ";
+	cout << "是否确定？ Y or other command  ";
 	string input;
 	cin >> input;
-	if (input == "N")
+	if (input != "Y")
 	{ 
 		cout << "撤销操作\n";
 		return;
@@ -138,46 +121,16 @@ inline void StudentList::deleteStudent(string index, string content)
 		
 	for (auto del_stu : result)
 	{
-		if (first->information.at("id") == del_stu->information.at("id"))
-			//删除头部
-		{
-			Student* temp = first;
-			first = first->next;
-			delete temp;
-			number--;
-			return;
-		}
-		Student* past_stu = first;
-		for (int i = 0; i < number; ++i)
+		Student* past_stu = headNode;
+		while (past_stu != endNode)
 			//寻找被删除节点的前一个节点指针
 		{
 			if (past_stu->next->information.at("id") == del_stu->information.at("id"))
 				break;
-
-			if (!past_stu->next)
-			{
-				cout << "未找到该考生\n";
-				return;
-			}
 			past_stu = past_stu->next;
 		}
-		if (past_stu->next->next == nullptr)
-			//删除尾部节点
-		{
-			delete past_stu->next;
-			past_stu->next = nullptr;
-			number--;
-			return;
-		}
-		else
-			//删除中间节点
-		{
-			Student* temp = past_stu->next;
-			past_stu->next = past_stu->next->next;
-			delete temp;
-			number--;
-			return;
-		}
+		past_stu->next = del_stu->next;
+		delete  del_stu;
 	}
 }
 
@@ -222,13 +175,13 @@ inline void StudentList::removeAllStudent(const Student & obj)
 inline void StudentList::printAllStudent(const Student& printStudent)
 {
 	cout << printStudent;
-	if (printStudent.next)
+	if (printStudent.next != endNode)
 		printAllStudent(*printStudent.next);
 }
 
-inline const Student * StudentList::getListFirst() const
+inline const Student * StudentList::getListHead() const
 {
-	return first;
+	return headNode;
 }
 
 inline vector<Student*>& StudentList::getResult()

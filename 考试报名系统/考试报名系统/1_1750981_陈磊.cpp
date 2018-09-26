@@ -71,7 +71,7 @@ int main()
 			continue;
 		}
 
-		studentList.printAllStudent(*studentList.getListFirst());
+		studentList.printAllStudent(*studentList.getListHead());
 		studentList.getResult().clear();
 		cout << "请输入指令接下来要完成的操作：\ninsert:插入数据   delete:删除数据 edit:修改数据 count:统计 exit:退出程序\n";
 		cin >> order;
