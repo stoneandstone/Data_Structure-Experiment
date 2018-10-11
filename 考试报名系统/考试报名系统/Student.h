@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include <iostream>
 #include <string>
@@ -7,7 +7,7 @@
 using namespace std;
 
 class Student
-	//½ÚµãÀàµÄ¶¨ÒåºÍÊµÏÖ
+	//èŠ‚ç‚¹ç±»çš„å®šä¹‰å’Œå®žçŽ°
 {
 public:
 	Student();
@@ -50,16 +50,16 @@ public:
 
 	bool checkStudent()
 	{
-		if (information.at("sex") != "ÄÐ"&&information.at("sex") != "Å®")
+		if (information.at("sex") != "ç”·"&&information.at("sex") != "å¥³")
 		{
-			cout << "ÐÔ±ðÊäÈëÓÐÎó\n";
+			cout << "æ€§åˆ«è¾“å…¥æœ‰è¯¯\n";
 			return false;
 		}
 		for (auto c : information.at("age"))
 		{
 			if (c<'0' || c>'9')
 			{
-				cout << "ÄêÁäÊäÈëÓÐÎó\n";
+				cout << "å¹´é¾„è¾“å…¥æœ‰è¯¯\n";
 				return false;
 			}
 		}
@@ -70,7 +70,7 @@ public:
 	{
 		if (index != "name"&&index != "sex"&&index != "age"&&index != "kind")
 		{
-			cout << "ÇëÊäÈëºÏ·¨µÄÊôÐÔ";
+			cout << "è¯·è¾“å…¥åˆæ³•çš„å±žæ€§";
 			return;
 		}
 		information.at(index) = content;
@@ -85,7 +85,7 @@ private:
 
 
 Student::Student()
-//·Ö±ð´ú±íÁËÑ§ÉúµÄÎå¸öÊôÐÔ Ñ§ºÅ ÐÕÃû ÐÔ±ð ÄêÁä ±¨¿¼ÖÖÀà
+//åˆ†åˆ«ä»£è¡¨äº†å­¦ç”Ÿçš„äº”ä¸ªå±žæ€§ å­¦å· å§“å æ€§åˆ« å¹´é¾„ æŠ¥è€ƒç§ç±»
 {
 	information.insert(make_pair("id",""));
 	information.insert(make_pair("name", ""));

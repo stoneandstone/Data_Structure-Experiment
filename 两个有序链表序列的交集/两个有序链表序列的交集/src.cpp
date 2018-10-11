@@ -1,38 +1,24 @@
-#include <iostream>
+ï»¿#include <iostream>
 #include <list>
 
 using namespace std;
 
-int main()
+void solve(list<int>& s1, list<int>& s2, list<int>& ans)
 {
-	list<int>s1, s2, ans;
-	int input;
-	//¶ÁÈ¡Á½Á´±íÖµ
-	do
-	{
-		cin >> input;
-		s1.push_back(input);
-	} while (input != -1);
-	
-	do
-	{
-		cin >> input;
-		s2.push_back(input);
-	} while (input != -1);
-
 	auto it1 = s1.begin(), it2 = s2.begin();
 
 	while (*it1 != -1 && *it2 != -1)
+		//å½“æœ‰ä¸€ä¸ªé“¾è¡¨æ£€ç´¢è‡³é“¾è¡¨å°¾ï¼Œç»“æŸå¾ªç¯
 	{
 		if (*it1 == *it2)
-			//Á½½áµãÖµÏàµÈ£¬½«½á¹û´æÈëans£¬Í¬Ê±µİÔöÁ½¸öµü´úÆ÷
+			//ä¸¤ç»“ç‚¹å€¼ç›¸ç­‰ï¼Œå°†ç»“æœå­˜å…¥ansï¼ŒåŒæ—¶é€’å¢ä¸¤ä¸ªè¿­ä»£å™¨
 		{
 			ans.push_back(*it1);
 			it1++; it2++;
 			continue;
 		}
 
-		//Á½½áµãÖµ²»ÏàµÈ£¬µİÔöÖµĞ¡µÄµü´úÆ÷
+		//ä¸¤ç»“ç‚¹å€¼ä¸ç›¸ç­‰ï¼Œé€’å¢å€¼å°çš„è¿­ä»£å™¨
 		else if (*it1 < *it2)
 		{
 			it1++;
@@ -45,14 +31,39 @@ int main()
 		}
 	}
 
+}
+
+int main()
+{
+	list<int>s1, s2, ans;
+	int input;
+	//è¯»å–ä¸¤é“¾è¡¨å€¼
+	do
+	{
+		cin >> input;
+		s1.push_back(input);
+	} while (input != -1);
+	
+	do
+	{
+		cin >> input;
+		s2.push_back(input);
+	} while (input != -1);
+
+	solve(s1, s2, ans);
+
 	if (ans.empty())
-		//Ã»ÓĞÏàµÈµÄÔªËØ
+		//æ²¡æœ‰ç›¸ç­‰çš„å…ƒç´ 
 		cout << "NULL";
 	else
 	{
 		for (auto num : ans)
 		{
-			cout << num << " ";
+			cout << num;
+
+			//è¾“å‡ºæœ€åä¸€ä½æ•°å­—æ—¶ï¼Œä¸è¾“å‡ºå¤šä½™çš„ç©ºæ ¼
+			if (num != *ans.rbegin())
+				cout << " ";
 		}
 	}
 

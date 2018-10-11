@@ -1,27 +1,27 @@
-#include "StudentList.h"
+ï»¿#include "StudentList.h"
 
 int main()
 {
-	cout << "Ê×´Î½¨Á¢¿¼ÉúĞÅÏ¢ÏµÍ³\n";
+	cout << "é¦–æ¬¡å»ºç«‹è€ƒç”Ÿä¿¡æ¯ç³»ç»Ÿ\n";
 
 	StudentList studentList;
 	int firstNum;
-	cout << "ÇëÊäÈëÊ×´ÎÂ¼Èë¿¼ÉúÊıÁ¿\n";
+	cout << "è¯·è¾“å…¥é¦–æ¬¡å½•å…¥è€ƒç”Ÿæ•°é‡\n";
 	cin >> firstNum;
 
 	Student input_student;
 	for (int i = 0; i < firstNum; ++i)
 	{
-		cout << "Çë°´ÕÕ Ñ§ºÅ ĞÕÃû ĞÔ±ğ ÄêÁä ±¨¿¼ÖÖÀà Îª¸ñÊ½ÊäÈë¿¼ÉúĞÅÏ¢" << endl;
+		cout << "è¯·æŒ‰ç…§ å­¦å· å§“å æ€§åˆ« å¹´é¾„ æŠ¥è€ƒç§ç±» ä¸ºæ ¼å¼è¾“å…¥è€ƒç”Ÿä¿¡æ¯" << endl;
 		cin >> input_student;
 		if (input_student.checkStudent())
 		{
 			studentList.addStudent(input_student);
-			cout << "Ñ§Éú³É¼¨Â¼Èë³É¹¦£¬»¹ÓĞ " << firstNum - i - 1 << " ÈËµÈ´ıÂ¼Èë\n";
+			cout << "å­¦ç”Ÿæˆç»©å½•å…¥æˆåŠŸï¼Œè¿˜æœ‰ " << firstNum - i - 1 << " äººç­‰å¾…å½•å…¥\n";
 		}
 	}
-	cout << "Â¼ÈëÍê³É\n";
-	cout << "ÇëÊäÈëÖ¸Áî½ÓÏÂÀ´ÒªÍê³ÉµÄ²Ù×÷£º\ninsert:²åÈëÊı¾İ   delete:É¾³ıÊı¾İ edit:ĞŞ¸ÄÊı¾İ overview:²é¿´ËùÓĞ¿¼Éú exit:ÍË³ö³ÌĞò\n";
+	cout << "å½•å…¥å®Œæˆ\n";
+	cout << "è¯·è¾“å…¥æŒ‡ä»¤æ¥ä¸‹æ¥è¦å®Œæˆçš„æ“ä½œï¼š\ninsert:æ’å…¥æ•°æ®   delete:åˆ é™¤æ•°æ® edit:ä¿®æ”¹æ•°æ® overview:æŸ¥çœ‹æ‰€æœ‰è€ƒç”Ÿ exit:é€€å‡ºç¨‹åº\n";
 	string order;
 
 	cin >> order;
@@ -29,7 +29,7 @@ int main()
 	{
 		if (order == "insert")
 		{
-			cout << "Çë°´ÕÕ Ñ§ºÅ ĞÕÃû ĞÔ±ğ ÄêÁä ±¨¿¼ÖÖÀà Îª¸ñÊ½ÊäÈë¿¼ÉúĞÅÏ¢" << endl;
+			cout << "è¯·æŒ‰ç…§ å­¦å· å§“å æ€§åˆ« å¹´é¾„ æŠ¥è€ƒç§ç±» ä¸ºæ ¼å¼è¾“å…¥è€ƒç”Ÿä¿¡æ¯" << endl;
 			cin >> input_student;
 			if (input_student.checkStudent())
 			{
@@ -38,42 +38,42 @@ int main()
 		}
 		else if (order == "delete")
 		{
-			cout << "¼ìË÷·½Ê½ ¿¼ºÅ£ºid ĞÕÃû£ºname ĞÔ±ğ£ºsex ÄêÁä£ºage ±¨¿¼ÖÖÀà£ºkind\n";
+			cout << "æ£€ç´¢æ–¹å¼ è€ƒå·ï¼šid å§“åï¼šname æ€§åˆ«ï¼šsex å¹´é¾„ï¼šage æŠ¥è€ƒç§ç±»ï¼škind\n";
 			string index, content;
 			cin >> index;
-			cout << "É¾³ı¶ÔÏóµÄÄÚÈİÎª\n";
+			cout << "åˆ é™¤å¯¹è±¡çš„å†…å®¹ä¸º\n";
 			cin >> content;
 			studentList.deleteStudent(index, content);
 		}
 		else if (order == "search")
 		{
-			cout << "¼ìË÷·½Ê½ ¿¼ºÅ£ºid ĞÕÃû£ºname ĞÔ±ğ£ºsex ÄêÁä£ºage ±¨¿¼ÖÖÀà£ºkind\n";
+			cout << "æ£€ç´¢æ–¹å¼ è€ƒå·ï¼šid å§“åï¼šname æ€§åˆ«ï¼šsex å¹´é¾„ï¼šage æŠ¥è€ƒç§ç±»ï¼škind\n";
 			string index, content;
 			cin >> index;
-			cout << "¶ÔÏó¶ÔÓ¦ÄÚÈİÎª\n";
+			cout << "å¯¹è±¡å¯¹åº”å†…å®¹ä¸º\n";
 			cin >> content;
 			studentList.searchStudent(index, content);
 		}
 		else if (order == "edit")
 		{
-			cout << "ÇëÊäÈë¸Ã¿¼Éú¿¼ºÅ\n";
+			cout << "è¯·è¾“å…¥è¯¥è€ƒç”Ÿè€ƒå·\n";
 			string id;
 			cin >> id;
 			studentList.editStudent(id);
 		}
 		else if(order=="count")
 		{
-			cout << "ËùÓĞ¿¼ÉúÈçÏÂ\n";
+			cout << "æ‰€æœ‰è€ƒç”Ÿå¦‚ä¸‹\n";
 		}
 		else
 		{
-			cout << "ÇëÊäÈëºÏ·¨µÄÖ¸Áî\n";
+			cout << "è¯·è¾“å…¥åˆæ³•çš„æŒ‡ä»¤\n";
 			continue;
 		}
 
 		studentList.printAllStudent(*studentList.getListHead());
 		studentList.getResult().clear();
-		cout << "ÇëÊäÈëÖ¸Áî½ÓÏÂÀ´ÒªÍê³ÉµÄ²Ù×÷£º\ninsert:²åÈëÊı¾İ   delete:É¾³ıÊı¾İ edit:ĞŞ¸ÄÊı¾İ count:Í³¼Æ exit:ÍË³ö³ÌĞò\n";
+		cout << "è¯·è¾“å…¥æŒ‡ä»¤æ¥ä¸‹æ¥è¦å®Œæˆçš„æ“ä½œï¼š\ninsert:æ’å…¥æ•°æ®   delete:åˆ é™¤æ•°æ® edit:ä¿®æ”¹æ•°æ® count:ç»Ÿè®¡ exit:é€€å‡ºç¨‹åº\n";
 		cin >> order;
 	}
 

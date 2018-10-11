@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "Student.h"
 #include <vector>
@@ -9,20 +9,20 @@ public:
 	StudentList();
 	~StudentList();
 
-	//²éÑ¯ËùÓĞÑ§ÉúÖĞ·ûºÏindexÊôĞÔÎªcontentµÄÑ§Éú£¬²¢½«·ûºÏÌõ¼şµÄÑ§ÉúÈ«²¿´¢´æÔÚresultÀï
+	//æŸ¥è¯¢æ‰€æœ‰å­¦ç”Ÿä¸­ç¬¦åˆindexå±æ€§ä¸ºcontentçš„å­¦ç”Ÿï¼Œå¹¶å°†ç¬¦åˆæ¡ä»¶çš„å­¦ç”Ÿå…¨éƒ¨å‚¨å­˜åœ¨resulté‡Œ
 	void searchAllStudent(string index, string content);
 
-	//Ìí¼ÓÒ»¸öÑ§Éú
+	//æ·»åŠ ä¸€ä¸ªå­¦ç”Ÿ
 	void addStudent(Student& obj);
 
-	//°´Ìõ¼şÉ¾³ıÑ§Éú
+	//æŒ‰æ¡ä»¶åˆ é™¤å­¦ç”Ÿ
 	void deleteStudent(string index, string content);
 
-	//°´Ìõ¼ş²éÕÒÑ§Éú
+	//æŒ‰æ¡ä»¶æŸ¥æ‰¾å­¦ç”Ÿ
 	void searchStudent(string index, string content);
 
 
-	//¸ù¾İÑ§ÉúµÄ¿¼ºÅÀ´Ñ°ÕÒÑ§Éú²¢½øĞĞÏà¹ØµÄĞŞ¸Ä
+	//æ ¹æ®å­¦ç”Ÿçš„è€ƒå·æ¥å¯»æ‰¾å­¦ç”Ÿå¹¶è¿›è¡Œç›¸å…³çš„ä¿®æ”¹
 	void editStudent(string id);
 
 	void removeAllStudent(const Student& obj);
@@ -74,7 +74,7 @@ inline void StudentList::addStudent(Student & obj)
 	*newStudent = obj;
 	if (!newStudent)
 	{
-		cout << "ÄÚ´æÉêÇëÊ§°Ü£¬²åÈëÊ§°Ü";
+		cout << "å†…å­˜ç”³è¯·å¤±è´¥ï¼Œæ’å…¥å¤±è´¥";
 		return;
 	}
 
@@ -83,7 +83,7 @@ inline void StudentList::addStudent(Student & obj)
 	{
 		if (insert->information.at("id") == obj.information.at("id"))
 		{
-			cout << "²»ÄÜÓĞÏàÍ¬µÄ¿¼ºÅ£¬²åÈëÊ§°Ü" << endl;
+			cout << "ä¸èƒ½æœ‰ç›¸åŒçš„è€ƒå·ï¼Œæ’å…¥å¤±è´¥" << endl;
 			return;
 		}
 		if (insert->information.at("id") < obj.information.at("id") && obj.information.at("id") < insert->next->information.at("id"))
@@ -92,7 +92,7 @@ inline void StudentList::addStudent(Student & obj)
 	}
 	newStudent->next = insert->next;
 	insert->next = newStudent;
-	cout << "²åÈë³É¹¦" << endl;
+	cout << "æ’å…¥æˆåŠŸ" << endl;
 }
 
 inline void StudentList::deleteStudent(string index, string content)
@@ -100,22 +100,22 @@ inline void StudentList::deleteStudent(string index, string content)
 	searchAllStudent(index, content);
 	if (result.empty())
 	{
-		cout << "Î´ÕÒµ½Ïà¹Ø¿¼Éú" << endl;
+		cout << "æœªæ‰¾åˆ°ç›¸å…³è€ƒç”Ÿ" << endl;
 		return;
 	}
 
-	cout << "ÒÔÏÂ¿¼Éú½«±»É¾³ı\n";
+	cout << "ä»¥ä¸‹è€ƒç”Ÿå°†è¢«åˆ é™¤\n";
 
 	for (auto del_stu : result)
 	{
 		cout << *del_stu;
 	}
-	cout << "ÊÇ·ñÈ·¶¨£¿ Y or other command  ";
+	cout << "æ˜¯å¦ç¡®å®šï¼Ÿ Y or other command  ";
 	string input;
 	cin >> input;
 	if (input != "Y")
 	{ 
-		cout << "³·Ïú²Ù×÷\n";
+		cout << "æ’¤é”€æ“ä½œ\n";
 		return;
 	}
 		
@@ -123,7 +123,7 @@ inline void StudentList::deleteStudent(string index, string content)
 	{
 		Student* past_stu = headNode;
 		while (past_stu != endNode)
-			//Ñ°ÕÒ±»É¾³ı½ÚµãµÄÇ°Ò»¸ö½ÚµãÖ¸Õë
+			//å¯»æ‰¾è¢«åˆ é™¤èŠ‚ç‚¹çš„å‰ä¸€ä¸ªèŠ‚ç‚¹æŒ‡é’ˆ
 		{
 			if (past_stu->next->information.at("id") == del_stu->information.at("id"))
 				break;
@@ -139,10 +139,10 @@ inline void StudentList::searchStudent(string index, string content)
 	searchAllStudent(index, content);
 	if (result.empty())
 	{
-		cout << "Î´ÕÒµ½Ïà¹Ø¿¼Éú\n";
+		cout << "æœªæ‰¾åˆ°ç›¸å…³è€ƒç”Ÿ\n";
 		return;
 	}
-	cout << "¹²ÕÒµ½" << result.size() << "ÃûÏà¹Ø¿¼Éú\n";
+	cout << "å…±æ‰¾åˆ°" << result.size() << "åç›¸å…³è€ƒç”Ÿ\n";
 	for (auto stu : result)
 	{
 		cout << *stu;
@@ -154,9 +154,9 @@ inline void StudentList::editStudent(string id)
 	searchAllStudent("id", id);
 	cout << *result[0];
 	string index, content;
-	cout << "ÇëÊäÈëĞŞ¸ÄµÄÏîÄ¿£¨¿¼ºÅ²»¿É±»ĞŞ¸Ä£©\n";
+	cout << "è¯·è¾“å…¥ä¿®æ”¹çš„é¡¹ç›®ï¼ˆè€ƒå·ä¸å¯è¢«ä¿®æ”¹ï¼‰\n";
 	cin >> index;
-	cout << "ĞŞ¸ÄÄÚÈİÎª\n";
+	cout << "ä¿®æ”¹å†…å®¹ä¸º\n";
 	cin >> content;
 	result[0]->editStudentInformation(index, content);
 }
@@ -186,6 +186,6 @@ inline const Student * StudentList::getListHead() const
 
 inline vector<Student*>& StudentList::getResult()
 {
-	return result;// TODO: ÔÚ´Ë´¦²åÈë return Óï¾ä
+	return result;// TODO: åœ¨æ­¤å¤„æ’å…¥ return è¯­å¥
 }
 
