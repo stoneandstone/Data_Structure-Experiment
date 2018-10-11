@@ -1,4 +1,4 @@
-#include <iostream>
+ï»¿#include <iostream>
 #include <vector>
 #include <assert.h>
 
@@ -25,13 +25,17 @@ public:
 	}
 };  
 
-Node beginNode, endNode;
+Node beginNode, endNode;//ä¿å­˜èµ·ç‚¹å’Œç»ˆç‚¹
+
+//8ä¸ªæ–¹å‘
 Node turn[8] = { {0,1},{1,1},{1,0},{1,-1},{0,-1},{-1,-1},{-1,0},{-1,1} };
+
+//ä¿å­˜è·¯å¾„
 vector<Node>path;
 
 void createMaze()
 {
-	cout << "ÇëÊäÈëÃÔ¹¬µÄĞĞÊıºÍÁĞÊı" << endl;
+	cout << "è¯·è¾“å…¥è¿·å®«çš„è¡Œæ•°å’Œåˆ—æ•°" << endl;
 	cin >> row >> col;
 	maze = new int*[row];
 	assert(maze);
@@ -42,22 +46,22 @@ void createMaze()
 	}
 	for (int i1 = 0; i1 < row; ++i1)
 	{
-		cout << "ÇëÊäÈëµÚ" << i1  << "ĞĞÃÔ¹¬ ¹²"<< col<<"¸öÊı×Ö£¨0´ú±íÂ·,1´ú±íÎ§Ç½£©"<< endl;
+		cout << "è¯·è¾“å…¥ç¬¬" << i1  << "è¡Œè¿·å®« å…±"<< col<<"ä¸ªæ•°å­—ï¼ˆ0ä»£è¡¨è·¯,1ä»£è¡¨å›´å¢™ï¼‰"<< endl;
 		for (int i2 = 0; i2 < col; ++i2)
 		{
 			cin >> maze[i1][i2];
 		}
 	}
-	cout << "ËùÊäÈëµÄÃÔ¹¬Îª" << endl;
+	cout << "æ‰€è¾“å…¥çš„è¿·å®«ä¸º" << endl;
 	cout << "        ";
 	for (int i = 0; i < col; ++i)
 	{
-		cout << "µÚ" << i << "ÁĞ ";
+		cout << "ç¬¬" << i << "åˆ— ";
 	}
 	cout << endl;
 	for (int i1 = 0; i1 < row; ++i1)
 	{
-		cout << "µÚ" << i1 << "ĞĞ     ";
+		cout << "ç¬¬" << i1 << "è¡Œ     ";
 		for (int i2 = 0; i2 < col; ++i2)
 		{
 			cout << maze[i1][i2] << "     ";
@@ -68,7 +72,7 @@ void createMaze()
 
 	do
 	{
-		cout << "ÇëÊäÈëÃÔ¹¬µÄÆğµãºÍÖÕµã ÏÈÊäÈëĞĞÔÙÊäÈëÁĞÒÔ¿Õ¸ñ·Ö¿ª" << endl;
+		cout << "è¯·è¾“å…¥è¿·å®«çš„èµ·ç‚¹å’Œç»ˆç‚¹ å…ˆè¾“å…¥è¡Œå†è¾“å…¥åˆ—ä»¥ç©ºæ ¼åˆ†å¼€" << endl;
 		cin >> beginNode >> endNode;
 		if (endNode.row<0 || endNode.col<0 || endNode.row>row || endNode.col>col)
 			continue;
@@ -92,7 +96,7 @@ bool findNode(const Node& obj)
 void outputPath()
 {
 	static int count = 1;
-	cout << "µÚ" << count << "ÌõÂ·ÈçÏÂ" << endl;
+	cout << "ç¬¬" << count << "æ¡è·¯å¦‚ä¸‹" << endl;
 	for (auto node : path)
 	{
 		cout << "(" << node.row << "," << node.col << ")";
@@ -106,23 +110,29 @@ void outputPath()
 
 void seekPath(Node& past)
 {
-	static bool isFind = false;
-	if (isFind)
-		return;
+	////è¿™æ®µä»£ç ç”¨äºåªè¾“å‡ºä¸€æ¡è·¯å¾„
+	//static bool isFind = false;
+	//if (isFind)
+	//	return;
+
 	if (past == endNode)
+		//èµ°åˆ°ç»ˆç‚¹
 	{
 		outputPath();
 		path.erase(path.end() - 1);
 		return;
 	 }
 	for (int i = 0; i < 8; ++i)
+		//éå†å…«ä¸ªæ–¹å‘
 	{
 		Node cur;
 		cur.row = past.row + turn[i].row;
 		cur.col = past.col + turn[i].col;
-		if (cur.row >= 0 && cur.row < row&&cur.col >=0 && cur.col < col)
+		if (cur.row >= 0 && cur.row < row && cur.col >=0 && cur.col < col)
+			//å½“å‰èŠ‚ç‚¹æœªè¶…å‡ºè¿·å®«è¾¹ç•Œ
 		{
-			if (maze[cur.row][cur.col] == 0&&!findNode(cur))
+			if (maze[cur.row][cur.col] == 0 && !findNode(cur))
+				//è¯¥ç»“ç‚¹æ˜¯ä¸€å µå¢™ï¼Œæˆ–è€…æ˜¯ä¹‹å‰èµ°è¿‡çš„èŠ‚ç‚¹
 			{
 				path.push_back(cur);
 				seekPath(cur);
