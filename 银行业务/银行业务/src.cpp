@@ -7,6 +7,8 @@ int main()
 {
 	int num, curnum;
 	cin >> num;
+
+
 	queue<int>windowa, windowb;
 	for (int i = 0; i < num; ++i)
 	{
