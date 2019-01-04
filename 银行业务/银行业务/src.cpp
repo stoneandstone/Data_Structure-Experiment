@@ -5,56 +5,51 @@ using namespace std;
 
 int main()
 {
+
 	int num, curnum;
 	cin >> num;
 
 
-	queue<int>windowa, windowb;
+	queue<int>window_a, window_b;
+
+	//输入各个顾客并分别调至对应的窗口
 	for (int i = 0; i < num; ++i)
 	{
 		cin >> curnum;
 		if (curnum % 2)
-			//奇数号去A窗口，偶数号去B窗口
-		{
-			windowa.push(curnum);
-		}
+		//奇数号去A窗口，偶数号去B窗口
+			window_a.push(curnum);
 		else
-		{
-			windowb.push(curnum);	
-		}
+			window_b.push(curnum);	
 	}
-	while (!windowa.empty() || !windowb.empty())
+
+
+	//处理业务过程，处理完所有顾客才会退出循环
+	while (!window_a.empty() || !window_b.empty())
 	{
-		if (!windowa.empty())
+		if (!window_a.empty())
 		{
 			for (int i = 1; i <= 2; ++i)
 			{
-				curnum = windowa.front();
-				windowa.pop();
+				curnum = window_a.front();
+				window_a.pop();
 				cout << curnum << " ";
-				if (windowa.empty())
+				if (window_a.empty())
 					break;
 			}
 		}
 
-		if (!windowb.empty())
+		if (!window_b.empty())
 		{
-			curnum = windowb.front();
-			windowb.pop();
-			cout << curnum;
-			if (windowb.empty())
-				break;
-			cout << " ";
+			curnum = window_b.front();
+			window_b.pop();
+			cout << curnum << " ";
 		}
 	}
 
-	while (!windowa.empty())
-	{
-		curnum = windowa.front();
-		windowa.pop();
-		cout << " " << curnum;
-	}
+	cout << '\b';
 
-	system("pause");
+
+
 	return 0;
 }

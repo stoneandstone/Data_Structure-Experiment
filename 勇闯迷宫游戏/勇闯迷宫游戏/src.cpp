@@ -69,18 +69,28 @@ void createMaze()
 		cout << endl;
 	}
 
+	bool isLegal = true;
+	bool isWall = false;
 
 	do
 	{
 		cout << "请输入迷宫的起点和终点 先输入行再输入列以空格分开" << endl;
 		cin >> beginNode >> endNode;
 		if (endNode.row<0 || endNode.col<0 || endNode.row>row || endNode.col>col)
+		{
+			isLegal = false;
 			continue;
+		}
 		if (beginNode.row<0 || beginNode.col<0 || beginNode.row>row || beginNode.col>col)
+		{
+			isLegal = false;
 			continue;
+		}
 
-	} while (maze[beginNode.row][beginNode.col] && maze[endNode.row][endNode.col]);
-	int a;
+		if (maze[beginNode.row][beginNode.col] || maze[endNode.row][endNode.col])
+			isWall = true;
+
+	} while (!isLegal || isWall);
 }
 
 bool findNode(const Node& obj)
@@ -93,9 +103,19 @@ bool findNode(const Node& obj)
 	return false;
 }
 
-void outputPath()
+void outputPath(bool test = true)
 {
 	static int count = 1;
+	if (!test)
+	{
+		if (count == 1)
+		{
+			cout << "没有路" << endl;
+			return;
+		}
+		else
+			return;
+	}
 	cout << "第" << count << "条路如下" << endl;
 	for (auto node : path)
 	{
@@ -105,7 +125,11 @@ void outputPath()
 			cout << "----->";
 		}
 	}
+
+
 	count++;
+
+	cout << endl;
 }
 
 void seekPath(Node& past)
@@ -139,7 +163,7 @@ void seekPath(Node& past)
 			}
 		}
 	}
-	path.erase(path.end() - 1);
+	path.erase(path.end() - 1);	//回溯
 }
 
 
@@ -149,6 +173,9 @@ int main()
 	createMaze();
 	path.push_back(beginNode);
 	seekPath(beginNode);
+
+	//对没有路的情况做出应对
+	outputPath(false);
 	
 	system("pause");
 	return 0; 

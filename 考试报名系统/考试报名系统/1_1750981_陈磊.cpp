@@ -21,7 +21,7 @@ int main()
 		}
 	}
 	cout << "录入完成\n";
-	cout << "请输入指令接下来要完成的操作：\ninsert:插入数据   delete:删除数据 edit:修改数据 overview:查看所有考生 exit:退出程序\n";
+	cout << "请输入指令接下来要完成的操作\n insert:插入数据\n delete:删除数据\n edit:修改数据\n search:查询相关考生\n count:查看所有考生\n exit:退出程序\n";
 	string order;
 
 	cin >> order;
@@ -68,12 +68,13 @@ int main()
 		else
 		{
 			cout << "请输入合法的指令\n";
+			cin >> order;
 			continue;
 		}
 
 		studentList.printAllStudent(*studentList.getListHead());
 		studentList.getResult().clear();
-		cout << "请输入指令接下来要完成的操作：\ninsert:插入数据   delete:删除数据 edit:修改数据 count:统计 exit:退出程序\n";
+		cout << "请输入指令接下来要完成的操作\n insert:插入数据\n delete:删除数据\n edit:修改数据\n search:查询相关考生\n count:查看所有考生\n exit:退出程序\n";
 		cin >> order;
 	}
 
